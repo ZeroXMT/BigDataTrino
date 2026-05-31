@@ -1,0 +1,12 @@
+<clickhouse>
+    <!--
+      Trino ClickHouse-коннектор создаёт все колонки как Nullable(...),
+      поэтому ключ сортировки MergeTree (ORDER BY) тоже оказывается nullable.
+      Разрешаем nullable-ключи по умолчанию для всех MergeTree-таблиц, иначе
+      CREATE TABLE падает с "Sorting key contains nullable columns".
+      Это настройка движка MergeTree (секция <merge_tree>), а не профиля.
+    -->
+    <merge_tree>
+        <allow_nullable_key>1</allow_nullable_key>
+    </merge_tree>
+</clickhouse>
